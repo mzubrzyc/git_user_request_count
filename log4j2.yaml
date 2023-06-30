@@ -1,0 +1,25 @@
+---
+Configuration:
+  status: info
+  name: Default
+  Properties:
+    Property:
+      name: SYSTEM_OUT_PATTERN
+      value: "%-23d{yyyy-MM-dd HH:mm:ss.SSS} [%highlight{%-5level}{STYLE=Logback}] %style{[%-10t]}{cyan} %style{%-20c{1.}}{magenta} %style{->}{yellow} %msg%n"
+  Appenders:
+    Console:
+      name: Console_Appender
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: ${SYSTEM_OUT_PATTERN}
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        ref: Console_Appender
+    Logger:
+      - name: app
+        level: info
+        additivity: false
+        AppenderRef:
+          ref: Console_Appender
