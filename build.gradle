@@ -16,7 +16,7 @@ repositories {
     mavenCentral()
 }
 
-ext["springBootVersion"] = '3.0.6'
+ext["springBootVersion"] = '3.1.1'
 ext["hibernateVersion"] = '6.1.7.Final'
 ext["log4jVersion"] = '2.20.0'
 ext["lombokVersion"] = '1.18.26'
@@ -39,6 +39,8 @@ dependencies {
     }
     implementation("org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}")
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+    implementation("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+
 
     implementation("org.springframework.retry:spring-retry:${springRetryVersion}")
 
