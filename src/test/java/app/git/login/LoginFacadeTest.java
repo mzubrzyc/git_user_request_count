@@ -8,6 +8,7 @@ import app.git.api.GitApiAdapter;
 import app.git.common.Login;
 import app.git.login.fixture.LoginDbProvider;
 import app.git.login.fixture.LoginExampleDataProvider;
+import app.git.login.fixture.LoginRequestCount;
 import app.git.util.UserGitInfoMapper;
 import app.test.config.IntegrationTest;
 import java.net.URI;
@@ -37,10 +38,10 @@ class LoginFacadeTest {
     @Autowired
     private LoginDbProvider loginDbProvider;
 
-        @BeforeEach
-        void before() {
-            loginDbProvider.deleteAll();
-        }
+    @BeforeEach
+    void before() {
+        loginDbProvider.deleteAll();
+    }
 
     @Test
     @SneakyThrows
@@ -48,7 +49,10 @@ class LoginFacadeTest {
         // given
         Login login = new Login("octocat");
         given(gitApiAdapter.getUserGitInfoForLogin(login))
-            .willReturn(UserGitInfoMapper.getInstance().toUserGitInfoRequest(LoginExampleDataProvider.OCTOCAT_GIT_INFO, login));
+            .willReturn(
+                UserGitInfoMapper.getInstance()
+                                 .toUserGitInfoRequest(LoginExampleDataProvider.OCTOCAT_GIT_INFO, login)
+            );
         // when
         MvcResult mvcResult = mockMvc
             .perform(
@@ -59,9 +63,10 @@ class LoginFacadeTest {
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andReturn();
         // then
-        ArgumentCaptor<Login> LoginCaptor = ArgumentCaptor.forClass(Login.class);
-        verify(gitApiAdapter).getUserGitInfoForLogin(LoginCaptor.capture());
-        assertThat(LoginCaptor.getValue()).isEqualTo(login);
+        assertThat(mvcResult.getResponse().getContentAsString().length()).isEqualTo(200);
+        ArgumentCaptor<Login> loginCaptor = ArgumentCaptor.forClass(Login.class);
+        verify(gitApiAdapter).getUserGitInfoForLogin(loginCaptor.capture());
+        assertThat(loginCaptor.getValue()).isEqualTo(login);
         LoginRequestCount requestCountForLogin = loginDbProvider.getRequestCountForLogin(login);
         assertThat(requestCountForLogin).isEqualTo(new LoginRequestCount(login, 1L));
     }

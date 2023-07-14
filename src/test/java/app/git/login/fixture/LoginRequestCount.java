@@ -1,4 +1,4 @@
-package app.git.login;
+package app.git.login.fixture;
 
 import app.git.common.Login;
 

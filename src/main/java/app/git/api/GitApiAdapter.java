@@ -5,19 +5,19 @@ import app.git.login.GitApiPort;
 import app.git.login.UserGitInfo;
 import app.git.util.UserGitInfoMapper;
 import java.io.IOException;
-import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import org.springframework.web.util.UriTemplate;
 
 public class GitApiAdapter implements GitApiPort {
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final UserGitInfoMapper userGitInfoMapper = UserGitInfoMapper.getInstance();
-    private final String BASE_GIT_API_URL;
+    private final String GIT_API_URL_USER_TEMPLATE;
 
     public GitApiAdapter(String baseGitApiUrl) {
-        this.BASE_GIT_API_URL = baseGitApiUrl;
+        this.GIT_API_URL_USER_TEMPLATE = baseGitApiUrl;
     }
 
     @Override
@@ -30,14 +30,11 @@ public class GitApiAdapter implements GitApiPort {
     }
 
     private HttpRequest prepareHttpRequest(String login) {
-        String baseGitUrl = BASE_GIT_API_URL + "users/";
+        UriTemplate gitUserUriTemplate = new UriTemplate(GIT_API_URL_USER_TEMPLATE);
         return HttpRequest.newBuilder()
-                          .uri(URI.create(baseGitUrl.concat(login)))
+                          .uri(gitUserUriTemplate.expand(login))
                           .GET()
                           .build();
     }
 
-    /*
-     * todo: create utility to build URI
-     * */
 }

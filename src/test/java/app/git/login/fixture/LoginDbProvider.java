@@ -1,7 +1,6 @@
 package app.git.login.fixture;
 
 import app.git.common.Login;
-import app.git.login.LoginRequestCount;
 import app.git.login.infrastructure.LoginRequestCountEntity;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;

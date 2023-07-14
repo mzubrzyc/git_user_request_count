@@ -1,7 +1,6 @@
 package app.git.util;
 
 import app.git.common.Login;
-import app.git.controller.UserGitInfoResponse;
 import app.git.login.UserGitInfo;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -20,6 +19,10 @@ public class UserGitInfoMapper {
         config();
     }
 
+    private void setupJsonMapper() {
+        jsonMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+    }
+
     public static UserGitInfoMapper getInstance() {
         return INSTANCE;
     }
@@ -27,18 +30,6 @@ public class UserGitInfoMapper {
     private void config() {
         jsonMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         jsonMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    }
-
-    public UserGitInfoResponse toUserGitInfoResponse(UserGitInfo userGitInfo, double calculation) {
-        return new UserGitInfoResponse(
-            userGitInfo.getId(),
-            userGitInfo.getLogin(),
-            userGitInfo.getName(),
-            userGitInfo.getType(),
-            userGitInfo.getAvatarUrl(),
-            userGitInfo.getCreatedAt(),
-            calculation
-        );
     }
 
     public UserGitInfo toUserGitInfoRequest(String userGitInfoJson, Login login) throws JsonProcessingException {

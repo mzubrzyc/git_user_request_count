@@ -7,6 +7,7 @@ import app.git.api.GitApiAdapter;
 import app.git.common.Login;
 import app.git.login.fixture.LoginDbProvider;
 import app.git.login.fixture.LoginExampleDataProvider;
+import app.git.login.fixture.LoginRequestCount;
 import app.git.util.UserGitInfoMapper;
 import app.test.config.IntegrationTest;
 import java.net.URI;
@@ -17,6 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,7 @@ class LoginFacadeMultiThreadsTest {
     @Autowired
     private LoginDbProvider loginDbProvider;
 
+    @Disabled(value = "Can't be run with other tests, it's only for training purposes")
     @Test
     @SneakyThrows
     @DisplayName("Testing capabilities for multithreaded requests")

@@ -7,17 +7,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GitApiConfig {
 
-    private final String BASE_GIT_API_URL;
+    private final String GIT_API_URL_USER_TEMPLATE;
 
     public GitApiConfig(
-        @Value("${base.git.api.url}") String baseGitApiUrl
+        @Value("${git.api.url.user.template}") String gitApiUrlUserTemplate
     ) {
-        this.BASE_GIT_API_URL = baseGitApiUrl;
+        this.GIT_API_URL_USER_TEMPLATE = gitApiUrlUserTemplate;
     }
 
     @Bean
     public GitApiAdapter gitApiAdapter() {
-        return new GitApiAdapter(BASE_GIT_API_URL);
+        return new GitApiAdapter(
+            GIT_API_URL_USER_TEMPLATE
+        );
     }
 
 }
