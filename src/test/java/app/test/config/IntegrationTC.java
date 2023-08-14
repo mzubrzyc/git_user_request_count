@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 
 @SpringBootTest(
     classes = App.class,
@@ -15,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ComponentScan({"app"})
 @ActiveProfiles(value = "test")
 @AutoConfigureMockMvc
+@ContextConfiguration(initializers = PostgresContainerInitializer.class)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface IntegrationTest {
+public @interface IntegrationTC {
 }

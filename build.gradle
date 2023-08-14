@@ -23,6 +23,7 @@ ext["lombokVersion"] = '1.18.26'
 ext["jacksonVersion"] = '2.14.2'
 ext["junitVersion"] = '5.9.2'
 ext["springRetryVersion"] = '2.0.2'
+ext["postgresTestContainerVersion"] = '1.18.3'
 
 configurations.implementation {
     exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
@@ -72,6 +73,9 @@ dependencies {
 
     // utils
     implementation("org.apache.commons:commons-math3:3.6.1")
+
+    // Postgres Test Container
+    testImplementation("org.testcontainers:postgresql:${postgresTestContainerVersion}")
 
     // JUnit
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.24.2'

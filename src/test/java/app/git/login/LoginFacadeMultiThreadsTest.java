@@ -30,6 +30,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
+/*
+* We can use @IntegrationTC to use Test Container.
+* @IntegrationTest uses H2 db based on properties read from properties file.
+* */
+//@IntegrationTC
 @IntegrationTest
 class LoginFacadeMultiThreadsTest {
 
@@ -53,7 +58,7 @@ class LoginFacadeMultiThreadsTest {
             .willReturn(UserGitInfoMapper.getInstance().toUserGitInfoRequest(LoginExampleDataProvider.OCTOCAT_GIT_INFO, login));
         ExecutorService executorService = Executors.newFixedThreadPool(4);
         List<Callable<Integer>> callableTasks = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             callableTasks.add(prepareGitApiRequestCallable(login));
         }
         // when
@@ -106,3 +111,4 @@ class LoginFacadeMultiThreadsTest {
     }
 
 }
+
